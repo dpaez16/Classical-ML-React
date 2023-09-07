@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {LinRegress} from './components/lin-regress/linRegress';
 import {SVM} from './components/svm/svm';
 import {KMeans} from './components/kmeans/kmeans';
@@ -13,21 +13,21 @@ import './App.css';
 export default class App extends Component {
     render() {
         return (
-            <BrowserRouter>
+            <Router>
                 <React.Fragment>
                     <NavBar />
                     <div className='main-content'>
-                        <Switch>
-                            <Route path='/linear-regression' component={LinRegress} />
-                            <Route path='/svm' component={SVM} />
-                            <Route path='/k-means' component={KMeans} />
-                            <Route path='/k-medoids' component={KMedoids} />
-                            <Route path='/lda' component={LDA} />
-                            <Route path='/' component={HomePage} />
-                        </Switch>
+                        <Routes>
+                            <Route path='/linear-regression' element={<LinRegress />} />
+                            <Route path='/svm' element={<SVM />} />
+                            <Route path='/k-means' element={<KMeans />} />
+                            <Route path='/k-medoids' element={<KMedoids />} />
+                            <Route path='/lda' element={<LDA />} />
+                            <Route path='/' element ={<HomePage />} />
+                        </Routes>
                     </div>
                 </React.Fragment>
-            </BrowserRouter>
+            </Router>
         );
     }
 };
