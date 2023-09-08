@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {List, Button, Icon} from 'semantic-ui-react';
 import './points.css';
 

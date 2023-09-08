@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Points from './points'
 import AddPointForm from './addPointForm';
-import LinRegressChartFunc from './linRegressChart';
+import LinRegressChart from './linRegressChart';
 import LinRegressBackground from './linRegressBackground';
 import MLAPIClient from '../../api/mlApiClient';
 import { Header } from 'semantic-ui-react';
@@ -47,13 +47,12 @@ export default function LinRegress() {
                 />
                 <Points 
                     points={points}
-                    toggle={toggle}
                     deletePoint={i => {
                         setPoints(points.filter((_, idx) => i !== idx));
                         setToggle((toggle + 1) % 2);
                     }}
                 />
-                <LinRegressChartFunc
+                <LinRegressChart
                     points={points}
                     bestFitLine={metadata.bestFitLine}
                 />
