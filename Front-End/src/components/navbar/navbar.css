@@ -12,12 +12,7 @@
 .navbar__icon {
     margin: 0;
     font-size: 1.5rem;
-}
-
-.navbar__icon a:hover,
-.navbar__icon a:active,
-.navbar__icon a.active {
-    color: black;
+    cursor: pointer;
 }
 
 .navbar__items {

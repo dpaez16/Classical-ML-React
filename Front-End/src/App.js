@@ -5,7 +5,7 @@ import {SVM} from './components/svm/svm';
 import {KMeans} from './components/kmeans/kmeans';
 import {KMedoids} from './components/kmedoids/kmedoids';
 import {LDA} from './components/lda/lda';
-import {NavBar} from './components/navbar/navbar';
+import NavBar from './components/navbar/navbar';
 import HomePage from './components/home/homePage';
 import './App.css';
 

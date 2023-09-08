@@ -1,14 +1,18 @@
-import React from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './navbar.css';
 
-export const NavBar = _ => {
+export default function NavBar() {
+    const navigate = useNavigate();
+
+    const clickHomePageHandler = (event) => {
+        event.preventDefault();
+        navigate('/');
+    };
+
     return (
         <header className='navbar'>
             <div className='navbar__icon'>
-                <h1>
-                    <NavLink to='/'>Classical ML Viz</NavLink>
-                </h1>
+                <h1 onClick={clickHomePageHandler}>Classical ML Viz</h1>
             </div>
             <nav className='navbar__items'>
                 <ul>
@@ -31,4 +35,4 @@ export const NavBar = _ => {
             </nav>
         </header>
     );
-}
+};
