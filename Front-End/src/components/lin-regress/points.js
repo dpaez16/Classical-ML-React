@@ -1,4 +1,4 @@
-import {List, Button, Icon} from 'semantic-ui-react';
+import {List, Button, Icon, Header} from 'semantic-ui-react';
 import './points.css';
 
 export default function Points(props) {
@@ -6,7 +6,7 @@ export default function Points(props) {
 
     return (
         <div className="lin-regress__points">
-            <h2><u>Points</u>:</h2>
+            <Header as='h2'><u>Points</u>:</Header>
             <div className="lin-regress__points-list">
                 <List>
                 {points.map((point, i) => {
