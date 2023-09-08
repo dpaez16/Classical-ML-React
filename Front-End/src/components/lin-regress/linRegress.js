@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import Points from './points'
-import AddPointForm from './addPointForm';
-import LinRegressChart from './linRegressChart';
-import LinRegressBackground from './linRegressBackground';
+import Points from './points/points'
+import AddPointForm from './addPointForm/addPointForm';
+import LinRegressChart from './linRegressChart/linRegressChart';
+import LinRegressBackground from './linRegressBackground/linRegressBackground';
 import MLAPIClient from '../../api/mlApiClient';
 import { Header } from 'semantic-ui-react';
 import './linRegress.css';
