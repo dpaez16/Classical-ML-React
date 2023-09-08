@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {Points} from './points'
 import AddPointForm from './addPointForm';
-import {LinRegressChart} from './linRegressChart';
+import LinRegressChartFunc from './linRegressChart';
 import LinRegressBackground from './linRegressBackground';
 import MLAPIClient from '../../api/mlApiClient';
 import { Header } from 'semantic-ui-react';
@@ -53,7 +53,7 @@ export default function LinRegress() {
                         setToggle((toggle + 1) % 2);
                     }}
                 />
-                <LinRegressChart
+                <LinRegressChartFunc
                     points={points}
                     bestFitLine={metadata.bestFitLine}
                 />
