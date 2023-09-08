@@ -32,7 +32,7 @@ export const KMedoidsBackground = _ => {
                 <li>
                     <a 
                         href='https://en.wikipedia.org/wiki/K-medoids' 
-                        target="_blank"
+                        rel="noopener"
                     >
                         Wikipedia
                     </a>

@@ -88,7 +88,7 @@ export const LDABackground = _ => {
                 <li>
                     <a 
                         href='https://en.wikipedia.org/wiki/Linear_discriminant_analysis' 
-                        target="_blank"
+                        rel="noopener"
                     >
                         Wikipedia
                     </a>

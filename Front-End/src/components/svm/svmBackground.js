@@ -85,7 +85,7 @@ export const SVMBackground = _ => {
                 <li>
                     <a 
                         href='https://en.wikipedia.org/wiki/Support-vector_machine' 
-                        target="_blank"
+                        rel="noopener"
                     >
                         Wikipedia
                     </a>

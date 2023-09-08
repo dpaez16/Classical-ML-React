@@ -32,7 +32,7 @@ export const KMeansBackground = _ => {
                 <li>
                     <a 
                         href='https://en.wikipedia.org/wiki/K-means_clustering' 
-                        target="_blank"
+                        rel="noopener"
                     >
                         Wikipedia
                     </a>
