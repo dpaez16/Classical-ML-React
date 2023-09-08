@@ -1,35 +1,12 @@
 import React, {Component} from 'react';
 import {Form, Input, Button} from 'semantic-ui-react';
-import {PROXY_URL} from '../misc/proxyURL';
+import MLAPIClient from '../../api/mlApiClient';
 import './addPointForm.css';
 
 function validNumber(str) {
     let trimmed = str.trim();
     return trimmed.length > 0 && isFinite(trimmed);
 };
-
-async function getMetadata(points) {
-    const x = [];
-    const y = [];
-    points.map(point => {
-        x.push(point.x);
-        y.push(point.y);
-    });
-    
-    const response = await fetch(PROXY_URL + '/lin_regress', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            'x': x,
-            'y': y
-        })
-    });
-
-    const metadata = await response.json();
-    return metadata;
-}
 
 export class AddPointForm extends Component {
     constructor(props) {
@@ -51,7 +28,7 @@ export class AddPointForm extends Component {
                 points: this.props.points
             });
 
-            const promise = getMetadata(this.props.points);
+            const promise = MLAPIClient.fetchLinearRegression(this.props.points);
             promise.then(metadata => this.state.updateMetadata(metadata));
         }
     };
