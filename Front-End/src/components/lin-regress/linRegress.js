@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {Points} from './points'
 import {AddPointForm} from './addPointForm';
 import {LinRegressChart} from './linRegressChart';
-import {LinRegressBackground} from './linRegressBackground';
+import LinRegressBackground from './linRegressBackground';
 import { Header } from 'semantic-ui-react';
 import './linRegress.css';
 

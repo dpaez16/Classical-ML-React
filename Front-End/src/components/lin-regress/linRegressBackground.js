@@ -1,8 +1,7 @@
-import React from 'react';
 import {Header} from 'semantic-ui-react';
 import { InlineMath, BlockMath } from 'react-katex';
 
-export const LinRegressBackground = _ => {
+export default function LinRegressBackground() {
     return (
         <div className='lin-regress__background'>
             <Header size='huge'>
@@ -127,7 +126,7 @@ export const LinRegressBackground = _ => {
                 <li>
                     <a 
                         href='https://en.wikipedia.org/wiki/Support-vector_machine' 
-                        target="_blank"
+                        rel="noopener"
                     >
                         Wikipedia
                     </a>
