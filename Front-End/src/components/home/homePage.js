@@ -3,7 +3,7 @@ import {Header} from 'semantic-ui-react';
 import './homePage.css';
 
 
-export const HomePage = _ => {
+export default function HomePage() {
     return (
         <div className='home-page'>
             <Header size='huge'>
@@ -18,4 +18,4 @@ export const HomePage = _ => {
             </p>
         </div>
     );
-}
+};
