@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {Points} from './points'
-import {AddPointForm} from './addPointForm';
+import AddPointForm from './addPointForm';
 import {LinRegressChart} from './linRegressChart';
 import LinRegressBackground from './linRegressBackground';
+import MLAPIClient from '../../api/mlApiClient';
 import { Header } from 'semantic-ui-react';
 import './linRegress.css';
 
@@ -17,6 +18,19 @@ export default function LinRegress() {
     });
     const [ toggle, setToggle ] = useState(0);
 
+    useEffect(() => {
+        MLAPIClient.fetchLinearRegression(points)
+        .then(newMetadata => {
+            setMetadata({
+                ...metadata,
+                ...newMetadata
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }, [toggle]);
+
     return (
         <div>
             <Header className='title'
@@ -26,9 +40,8 @@ export default function LinRegress() {
             <div className="lin-regress">
                 <AddPointForm 
                     points={points}
-                    onNewPoint={point => setPoints([...points, point])}
-                    updateMetadata={newMetadata => {
-                        setMetadata(newMetadata);
+                    onNewPoint={point => {
+                        setPoints([...points, point]);
                         setToggle((toggle + 1) % 2);
                     }}
                 />
