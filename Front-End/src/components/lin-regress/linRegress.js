@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {Points} from './points'
+import Points from './points'
 import AddPointForm from './addPointForm';
 import LinRegressChartFunc from './linRegressChart';
 import LinRegressBackground from './linRegressBackground';
