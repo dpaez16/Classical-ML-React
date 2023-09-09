@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Points} from './points'
-import {AddPointForm} from './addPointForm';
-import {KMeansChart} from './kmeansChart';
-import {KMeansBackground} from './kmeansBackground';
-import {KMeansSlider} from './kmeansSlider';
+import Points from './points/points'
+import {AddPointForm} from './addPointForm/addPointForm';
+import {KMeansChart} from './kmeansChart/kmeansChart';
+import {KMeansBackground} from './kmeansBackground/kmeansBackground';
+import {KMeansSlider} from './kmeansSlider/kmeansSlider';
 import { Header } from 'semantic-ui-react';
 import './kmeans.css';
 
@@ -68,7 +68,6 @@ export class KMeans extends Component {
                     />
                     <Points 
                         points={this.state.points}
-                        toggle={this.state.toggle}
                         deletePoint={
                             i => this.setState({
                                     points: this.state.points.filter((_, idx) => i !== idx),

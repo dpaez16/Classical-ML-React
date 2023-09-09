@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Form, Input, Button} from 'semantic-ui-react';
-import {PROXY_URL} from '../misc/proxyURL';
+import {PROXY_URL} from '../../misc/proxyURL';
 import './addPointForm.css';
 
 
