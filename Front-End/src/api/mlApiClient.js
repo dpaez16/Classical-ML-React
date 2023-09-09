@@ -85,4 +85,29 @@ export default class MLAPIClient {
             throw err;
         });
     }
+
+    static fetchKMedoids(points, k, metric) {
+        const x = [];
+        const y = [];
+
+        points.forEach(point => {
+            x.push(point.x);
+            y.push(point.y);
+        });
+
+        const body = {
+            'x': x,
+            'y': y,
+            'k': k,
+            'metric': metric
+        };
+    
+        return this.#createApiRequest(body, 'kmedoids')
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            throw err;
+        });
+    }
 };

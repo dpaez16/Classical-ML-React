@@ -23,7 +23,7 @@ const KMEANS_COLORS = [
     'turquoise'
 ];
 
-export function KMeans() {
+export default function KMeans() {
     const [points, setPoints, pushPoint, deletePointAtIndex] = useArray([{x: 1, y: 2, label: 0}, {x: 2, y: 1, label: 0}, {x: 3, y: 4, label: 0}]);
     const [k, setK] = useState(1);
     const [centroids, setCentroids] = useState([]);

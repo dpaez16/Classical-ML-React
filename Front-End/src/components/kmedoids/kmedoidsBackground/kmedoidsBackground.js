@@ -1,8 +1,7 @@
-import React from 'react';
 import {Header} from 'semantic-ui-react';
 import { InlineMath, BlockMath } from 'react-katex';
 
-export const KMedoidsBackground = _ => {
+export default function KMedoidsBackground() {
     return (
         <div className='kmedoids__background'>
             <Header size='huge'>
@@ -40,4 +39,4 @@ export const KMedoidsBackground = _ => {
             </ul>
         </div>
     );
-}
+};
