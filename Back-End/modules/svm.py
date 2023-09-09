@@ -1,6 +1,10 @@
 import numpy as np
 from sklearn.svm import SVC
 
+BLACK = '#000000'
+RED   = '#FF0000'
+BLUE  = '#0000FF'
+
 def makeLine(xx, yy):
     leftPoint = {'x': xx[0], 'y': np.round(yy[0], 4)}
     rightPoint = {'x': xx[1], 'y': np.round(yy[1], 4)}
@@ -8,18 +12,18 @@ def makeLine(xx, yy):
 
 
 def getColors(clf, xx, yy_up, yy_down):
-    colors = ['#000000']
+    colors = [BLACK]
     predicted = clf.predict([[xx[0], yy_up[0]]])
     if np.max(predicted) == 1:
-        colors.append('#FF0000')
+        colors.append(RED)
     else:
-        colors.append('#0000FF')
+        colors.append(BLUE)
 
     predicted = clf.predict([[xx[0], yy_down[0]]])
     if np.max(predicted) == 1:
-        colors.append('#FF0000')
+        colors.append(RED)
     else:
-        colors.append('#0000FF')
+        colors.append(BLUE)
     
     return colors
 
@@ -37,7 +41,7 @@ def svm(data, eps=1e-3):
             "boundaryLine": [zero] * 2,
             "upperLine": [zero] * 2,
             "lowerLine": [zero] * 2,
-            "colors": ['#000000', '#000000', '#000000'],
+            "colors": [BLACK, BLACK, BLACK],
             "accuracy": 'N/A'
         }
 
