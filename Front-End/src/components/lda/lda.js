@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Gaussians} from './gaussians'
-import {AddGaussianForm} from './addGaussianForm';
-import {LDAChart} from './ldaChart';
-import {LDABackground} from './ldaBackground';
+import Gaussians from './gaussians/gaussians'
+import AddGaussianForm from './addGaussianForm/addGaussianForm';
+import LDAChart from './ldaChart/ldaChart';
+import LDABackground from './ldaBackground/ldaBackground';
 import { Header } from 'semantic-ui-react';
 import './lda.css';
 

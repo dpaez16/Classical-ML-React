@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Form, Input, Button} from 'semantic-ui-react';
-import {PROXY_URL} from '../misc/proxyURL';
+import {PROXY_URL} from '../../misc/proxyURL';
 import {InlineMath} from 'react-katex';
 import './addGaussianForm.css';
 
@@ -9,7 +9,7 @@ function validNumber(str) {
     return trimmed.length > 0 && isFinite(trimmed);
 };
 
-export async function getMetadata(means, covarianceMatrices) {
+async function getMetadata(means, covarianceMatrices) {
     const response = await fetch(PROXY_URL + '/lda', {
         method: 'POST',
         headers: {
@@ -25,7 +25,7 @@ export async function getMetadata(means, covarianceMatrices) {
     return metadata;
 }
 
-export class AddGaussianForm extends Component {
+export default class AddGaussianForm extends Component {
     constructor(props) {
         super(props);
         this.state = {

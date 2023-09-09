@@ -3,7 +3,7 @@ import {List, Button, Icon} from 'semantic-ui-react';
 import {InlineMath} from 'react-katex';
 import './gaussians.css';
 
-export class Gaussians extends Component {
+export default class Gaussians extends Component {
     constructor(props) {
         super(props);
         this.state = {

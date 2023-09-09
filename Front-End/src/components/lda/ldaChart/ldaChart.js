@@ -28,7 +28,7 @@ function properMaxScaling(n) {
         return n * 0.9;
 }
 
-export class LDAChart extends Component {
+export default class LDAChart extends Component {
     constructor(props) {
         super(props);
         this.state = {

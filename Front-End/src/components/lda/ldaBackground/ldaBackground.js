@@ -2,7 +2,7 @@ import React from 'react';
 import {Header} from 'semantic-ui-react';
 import { InlineMath, BlockMath } from 'react-katex';
 
-export const LDABackground = _ => {
+export default function LDABackground () {
     return (
         <div className='lda__background'>
             <Header size='huge'>
@@ -96,4 +96,4 @@ export const LDABackground = _ => {
             </ul>
         </div>
     );
-}
+};
