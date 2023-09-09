@@ -34,4 +34,30 @@ export default class MLAPIClient {
             throw err
         });
     }
+
+    static fetchSVM(points, c) {
+        const x = [];
+        const y = [];
+        const labels = [];
+        points.map(point => {
+            x.push(point.x);
+            y.push(point.y);
+            labels.push(point.label);
+        });
+
+        const body = {
+            x: x,
+            y: y,
+            labels: labels,
+            c: c
+        };
+
+        return this.#createApiRequest(body, 'svm')
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            throw err;
+        });
+    }
 };
