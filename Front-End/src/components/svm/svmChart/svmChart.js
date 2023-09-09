@@ -114,6 +114,10 @@ export default function SVMChart(props) {
         d3.select(yAxis.current)
             .call(yAxisFunction);
     };
+
+    if (props.boundaryLine === undefined) {
+        return (<></>);
+    }
     
     const [xScale, yScale] = updateScales();
     updateAxes(xScale, yScale);

@@ -27,7 +27,6 @@ export default function AddPointForm(props) {
         event.preventDefault();
 
         const { name, value } = event.target;
-        console.log(name, value);
         setPoint({
             ...point,
             ...{[name]: value}

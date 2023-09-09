@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LinRegress from './components/lin-regress/linRegress';
-import {SVM} from './components/svm/svm';
+import SVM from './components/svm/svm';
 import {KMeans} from './components/kmeans/kmeans';
 import {KMedoids} from './components/kmedoids/kmedoids';
 import {LDA} from './components/lda/lda';
