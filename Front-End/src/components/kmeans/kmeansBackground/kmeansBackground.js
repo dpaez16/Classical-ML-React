@@ -1,8 +1,7 @@
-import React from 'react';
 import {Header} from 'semantic-ui-react';
 import { InlineMath, BlockMath } from 'react-katex';
 
-export const KMeansBackground = _ => {
+export default function KMeansBackground() {
     return (
         <div className='kmeans__background'>
             <Header size='huge'>

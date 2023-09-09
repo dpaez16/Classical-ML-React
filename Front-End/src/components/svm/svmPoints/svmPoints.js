@@ -1,7 +1,7 @@
 import {List, Button, Icon} from 'semantic-ui-react';
-import './points.css';
+import './svmPoints.css';
 
-export default function Points(props) {
+export default function SVMPoints(props) {
     const {points, deletePoint} = props;
 
     return (

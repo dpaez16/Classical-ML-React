@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Form, Input, Dropdown, Button} from 'semantic-ui-react';
 import {validNumber} from '../../../helpers/validators';
-import './addPointForm.css';
+import './addSVMPointForm.css';
 
 const SVM_OPTIONS = [
     {
@@ -16,7 +16,7 @@ const SVM_OPTIONS = [
     }
 ];
 
-export default function AddPointForm(props) {
+export default function AddSVMPointForm(props) {
     const [point, setPoint] = useState({
         x: '',
         y: '',

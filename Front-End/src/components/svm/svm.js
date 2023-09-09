@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
-import Points from './points/points'
-import AddPointForm from './addPointForm/addPointForm';
+import SVMPoints from './svmPoints/svmPoints'
+import AddSVMPointForm from './addSVMPointForm/addSVMPointForm';
 import SVMChart from './svmChart/svmChart';
 import SVMBackground from './svmBackground/svmBackground';
 import SVMSlider from './svmSlider/svmSlider';
@@ -42,7 +42,7 @@ export default function SVM() {
                 Support Vector Machine
             </Header>
             <div className="svm">
-                <AddPointForm 
+                <AddSVMPointForm 
                     points={points}
                     onNewPoint={point => setPoints([...points, point])}
                 />
@@ -51,7 +51,7 @@ export default function SVM() {
                     c={c}
                     updateC={setC}
                 />
-                <Points 
+                <SVMPoints 
                     points={points}
                     deletePoint={i => setPoints(points.filter((_, idx) => i !== idx))}
                 />

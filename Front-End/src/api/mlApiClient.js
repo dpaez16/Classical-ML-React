@@ -39,7 +39,8 @@ export default class MLAPIClient {
         const x = [];
         const y = [];
         const labels = [];
-        points.map(point => {
+
+        points.forEach(point => {
             x.push(point.x);
             y.push(point.y);
             labels.push(point.label);
@@ -53,6 +54,30 @@ export default class MLAPIClient {
         };
 
         return this.#createApiRequest(body, 'svm')
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            throw err;
+        });
+    }
+
+    static fetchKMeans(points, k) {
+        const x = [];
+        const y = [];
+
+        points.forEach(point => {
+            x.push(point.x);
+            y.push(point.y);
+        });
+
+        const body = {
+            x: x,
+            y: y,
+            k: k
+        };
+
+        return this.#createApiRequest(body, 'kmeans')
         .then(response => {
             return response.json();
         })

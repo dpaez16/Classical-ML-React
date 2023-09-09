@@ -1,65 +1,45 @@
-import React, {Component} from 'react';
+import { useRef } from 'react';
+import {properMinScaling, properMaxScaling} from '../../../helpers/dataVisualHelpers';
 import * as d3 from 'd3';
 
+export default function KMeansChart(props) {
+    const chartArea = useRef(null);
+    const xAxis = useRef(null);
+    const yAxis = useRef(null);
 
-function properMinScaling(n) {
-    if (n >= 0)
-        return n * 0.9;
-    else
-        return n * 1.1;
-}
-
-function properMaxScaling(n) {
-    if (n >= 0)
-        return n * 1.1;
-    else
-        return n * 0.9;
-}
-
-export class KMeansChart extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            width: 800,
-            height: 400,
-            radius: 5,
-            margin: {
-                left: 50,
-                right: 10,
-                top: 20,
-                bottom: 50
-            }
-        };
-
-        this.drawWidth = this.state.width - this.state.margin.left - this.state.margin.right;
-        this.drawHeight = this.state.height - this.state.margin.top - this.state.margin.bottom;
+    const CHART_PARAMS = {
+        width: 800,
+        height: 400,
+        radius: 5,
+        margin: {
+            left: 50,
+            right: 10,
+            top: 20,
+            bottom: 50
+        }
     };
 
-    componentDidMount() {
-        this.update();
-    }
+    const drawWidth = CHART_PARAMS.width - CHART_PARAMS.margin.left - CHART_PARAMS.margin.right;
+    const drawHeight = CHART_PARAMS.height - CHART_PARAMS.margin.top - CHART_PARAMS.margin.bottom;
 
-    componentDidUpdate() {
-        this.update();
-    };
-
-    updateScales() {
-        const allPoints = this.props.points
-            .concat(this.props.centroids);
+    const updateScales = () => {
+        const allPoints = props.points.concat(props.centroids);
         
-        let xMin = d3.min(allPoints, (d) => properMinScaling(+d.x));
-        let xMax = d3.max(allPoints, (d) => properMaxScaling(+d.x));
-        let yMin = d3.min(allPoints, (d) => properMinScaling(+d.y));
-        let yMax = d3.max(allPoints, (d) => properMaxScaling(+d.y));
+        const xMin = d3.min(allPoints, (d) => properMinScaling(+d.x));
+        const xMax = d3.max(allPoints, (d) => properMaxScaling(+d.x));
+        const yMin = d3.min(allPoints, (d) => properMinScaling(+d.y));
+        const yMax = d3.max(allPoints, (d) => properMaxScaling(+d.y));
 
-        this.xScale = d3.scaleLinear().domain([xMin, xMax]).range([0, this.drawWidth])
-        this.yScale = d3.scaleLinear().domain([yMax, yMin]).range([0, this.drawHeight])
-    }
+        const xScale = d3.scaleLinear().domain([xMin, xMax]).range([0, drawWidth])
+        const yScale = d3.scaleLinear().domain([yMax, yMin]).range([0, drawHeight])
+
+        return [xScale, yScale];
+    };
     
-    updatePoints() {
-        let centroids = d3.select(this.chartArea).selectAll('rect').data(this.props.centroids);
-        let r = this.state.radius;
-        let colors = this.props.colors;
+    const updatePoints = (xScale, yScale) => {
+        const centroids = d3.select(chartArea.current).selectAll('rect').data(props.centroids);
+        const r = CHART_PARAMS.radius;
+        const colors = props.colors;
 
         centroids.enter().append('rect')
             .merge(centroids)
@@ -69,12 +49,12 @@ export class KMeansChart extends Component {
             .attr('fill', (d) => colors[d.label])
             .attr('label', (d) => d.label)
             .transition().duration(500)
-            .attr('x', (d) => this.xScale(d.x) - 2*r)
-            .attr('y', (d) => this.yScale(d.y) - 2*r)
+            .attr('x', (d) => xScale(d.x) - 2*r)
+            .attr('y', (d) => yScale(d.y) - 2*r)
 
         centroids.exit().remove();
 
-        let circles = d3.select(this.chartArea).selectAll('circle').data(this.props.points);
+        const circles = d3.select(chartArea.current).selectAll('circle').data(props.points);
 
         circles.enter().append('circle')
             .merge(circles)
@@ -82,49 +62,45 @@ export class KMeansChart extends Component {
             .attr('fill', (d) => colors[d.label])
             .attr('label', (d) => d.label)
             .transition().duration(500)
-            .attr('cx', (d) => this.xScale(d.x))
-            .attr('cy', (d) => this.yScale(d.y))
+            .attr('cx', (d) => xScale(d.x))
+            .attr('cy', (d) => yScale(d.y))
 
         circles.exit().remove();
-    }
+    };
     
-    updateAxes() {
+    const updateAxes = (xScale, yScale) => {
         let xAxisFunction = d3.axisBottom()
-            .scale(this.xScale)
+            .scale(xScale)
             .ticks(5, 's');
 
         let yAxisFunction = d3.axisLeft()
-            .scale(this.yScale)
+            .scale(yScale)
             .ticks(5, 's');
 
-        d3.select(this.xAxis)
+        d3.select(xAxis.current)
             .call(xAxisFunction);
 
-        d3.select(this.yAxis)
+        d3.select(yAxis.current)
             .call(yAxisFunction);
     }
     
-    update() {
-        this.updateScales();
-        this.updateAxes();
-        this.updatePoints();
-    }
+    const [xScale, yScale] = updateScales();
+    updateAxes(xScale, yScale);
+    updatePoints(xScale, yScale);
 
-    render() {
-        return (
-            <div className="kmeans__chart">
-                <svg className="chart" width={this.state.width} height={this.state.height}>
-                    <g ref={(node) => { this.chartArea = node; }}
-                        transform={`translate(${this.state.margin.left}, ${this.state.margin.top})`} />
+    return (
+        <div className="kmeans__chart">
+            <svg className="chart" width={CHART_PARAMS.width} height={CHART_PARAMS.height}>
+                <g ref={chartArea}
+                    transform={`translate(${CHART_PARAMS.margin.left}, ${CHART_PARAMS.margin.top})`} />
 
-                    {/* Axes */}
-                    <g ref={(node) => { this.xAxis = node; }}
-                        transform={`translate(${this.state.margin.left}, ${this.state.height - this.state.margin.bottom})`}></g>
-                    <g ref={(node) => { this.yAxis = node; }}
-                        transform={`translate(${this.state.margin.left}, ${this.state.margin.top})`}></g>
-                </svg>
-            </div>
+                {/* Axes */}
+                <g ref={xAxis}
+                    transform={`translate(${CHART_PARAMS.margin.left}, ${CHART_PARAMS.height - CHART_PARAMS.margin.bottom})`}></g>
+                <g ref={yAxis}
+                    transform={`translate(${CHART_PARAMS.margin.left}, ${CHART_PARAMS.margin.top})`}></g>
+            </svg>
+        </div>
 
-        )
-    }
+    );
 };
