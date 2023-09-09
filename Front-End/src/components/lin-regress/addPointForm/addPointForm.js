@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import {Form, Input, Button} from 'semantic-ui-react';
+import { validNumber } from '../../../helpers/validators';
 import './addPointForm.css';
-
-function validNumber(str) {
-    let trimmed = str.trim();
-    return trimmed.length > 0 && isFinite(trimmed);
-};
 
 export default function AddPointForm(props) {
     const [ point, setPoint ] = useState({

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import * as d3 from 'd3';
+import { properMinScaling, properMaxScaling } from '../../../helpers/dataVisualHelpers';
 
 export default function LinRegressChart(props) {
     const xAxis = useRef(null);
@@ -25,9 +26,6 @@ export default function LinRegressChart(props) {
     const updateScales = () => {
         const allPoints = [...props.points, props.bestFitLine];
 
-        const properMinScaling = n => n >= 0 ? n * 0.9 : n * 1.1;
-        const properMaxScaling = n => -properMinScaling(-n);
-        
         const xMin = d3.min(allPoints, (d) => properMinScaling(+d.x));
         const xMax = d3.max(allPoints, (d) => properMaxScaling(+d.x));
         const yMin = d3.min(allPoints, (d) => properMinScaling(+d.y));

@@ -1,8 +1,7 @@
-import React from 'react';
 import {Header, Image} from 'semantic-ui-react';
 import { InlineMath, BlockMath } from 'react-katex';
 
-export const SVMBackground = _ => {
+export default function SVMBackground() {
     return (
         <div className='svm__background'>
             <Header size='huge'>
@@ -93,4 +92,4 @@ export const SVMBackground = _ => {
             </ul>
         </div>
     );
-}
+};
