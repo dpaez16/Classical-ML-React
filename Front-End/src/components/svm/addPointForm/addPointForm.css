@@ -1,0 +1,8 @@
+.xy-form__row {
+    display: flex;
+    padding-bottom: 10px;
+}
+
+.xy-form__row__input {
+    width: 115px !important;
+}

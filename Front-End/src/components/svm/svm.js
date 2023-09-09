@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Points} from './points'
-import {AddPointForm} from './addPointForm';
-import SVMChart from './svmChart';
-import SVMBackground from './svmBackground';
+import AddPointForm from './addPointForm/addPointForm';
+import SVMChart from './svmChart/svmChart';
+import SVMBackground from './svmBackground/svmBackground';
 import {SVMSlider} from './svmSlider';
 import { Header } from 'semantic-ui-react';
 import './svm.css';
