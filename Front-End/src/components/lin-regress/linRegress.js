@@ -16,7 +16,6 @@ export default function LinRegress() {
         b: 0.33,
         residual: 2.67
     });
-    const [ toggle, setToggle ] = useState(0);
 
     useEffect(() => {
         MLAPIClient.fetchLinearRegression(points)
@@ -29,7 +28,7 @@ export default function LinRegress() {
         .catch(err => {
             console.log(err);
         });
-    }, [toggle]);
+    }, [points]);
 
     return (
         <div>
@@ -42,14 +41,12 @@ export default function LinRegress() {
                     points={points}
                     onNewPoint={point => {
                         setPoints([...points, point]);
-                        setToggle((toggle + 1) % 2);
                     }}
                 />
                 <Points 
                     points={points}
                     deletePoint={i => {
                         setPoints(points.filter((_, idx) => i !== idx));
-                        setToggle((toggle + 1) % 2);
                     }}
                 />
                 <LinRegressChart
