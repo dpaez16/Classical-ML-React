@@ -11,7 +11,7 @@ import { Header } from 'semantic-ui-react';
 import './lda.css';
 
 
-export function LDA() {
+export default function LDA() {
     const DEBOUNCE_DELAY = 250;
     const [means, _, pushMean, deleteMeanFromIdx] = useArray([]);
     const [covMatrices, __, pushCovMatrix, deleteCovMatrixFromIdx] = useArray([]);
