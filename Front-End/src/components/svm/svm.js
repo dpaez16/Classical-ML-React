@@ -16,7 +16,7 @@ import './svm.css';
 export default function SVM() {
     const DEBOUNCE_DELAY = 250;
 
-    const [points, setPoints] = useState([{x: 1, y: 2, label: 1}, {x: 2, y: 1, label: -1}, {x: 3, y: 4, label: 1}]);
+    const [points, setPoint, pushPoint, deletePointAtIndex] = useArray([{x: 1, y: 2, label: 1}, {x: 2, y: 1, label: -1}, {x: 3, y: 4, label: 1}]);
     const [c, setC] = useState(1);
     const [metadata, setMetadata] = useState({
         boundaryLine: undefined,
@@ -52,7 +52,7 @@ export default function SVM() {
                 <AddSVMPointForm 
                     points={points}
                     onNewPoint={point => {
-                        setPoints([...points, point]);
+                        pushPoint(point);
                         flipToggle();
                     }}
                 />
@@ -67,7 +67,7 @@ export default function SVM() {
                 <SVMPoints 
                     points={points}
                     deletePoint={i => {
-                        setPoints(points.filter((_, idx) => i !== idx));
+                        deletePointAtIndex(i);
                         flipToggle();
                     }}
                 />
