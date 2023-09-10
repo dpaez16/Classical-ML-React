@@ -15,7 +15,7 @@ def kmeans(data):
     k = int(data['k'])
     D = np.array([x, y]).T
     k = min(k, D.shape[0])
-    clf = KMeans(n_clusters=k).fit(D)
+    clf = KMeans(n_clusters=k, n_init='auto').fit(D)
     labels, centroids = clf.labels_, clf.cluster_centers_
     
     output_data = {
