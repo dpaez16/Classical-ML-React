@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import Points from '../lin-regress/points/points'
-import AddPointForm from '../lin-regress/addPointForm/addPointForm';
+import AddPointForm from '../lin-regress/addPointForm/addPointForm'; // TODO: refactor
 import KMeansChart from '../kmeans/kmeansChart/kmeansChart'; // TODO: refactor
 import KMedoidsBackground from './kmedoidsBackground/kmedoidsBackground';
 import KMedoidsSlider from './kmedoidsSlider/kmedoidsSlider';
