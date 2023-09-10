@@ -8,6 +8,7 @@ import MLAPIClient from '../../api/mlApiClient';
 import { Header } from 'semantic-ui-react';
 import useArray from '../../hooks/useArray';
 import useToggle from '../../hooks/useToggle';
+import useDebounce from '../../hooks/useDebounce';
 import './kmeans.css';
 
 const KMEANS_COLORS = [
@@ -24,10 +25,12 @@ const KMEANS_COLORS = [
 ];
 
 export default function KMeans() {
+    const DEBOUNCE_DELAY = 250;
     const [points, setPoints, pushPoint, deletePointAtIndex] = useArray([{x: 1, y: 2, label: 0}, {x: 2, y: 1, label: 0}, {x: 3, y: 4, label: 0}]);
     const [k, setK] = useState(1);
     const [centroids, setCentroids] = useState([]);
     const [toggle, flipToggle] = useToggle();
+    const debouncedToggle = useDebounce(toggle, DEBOUNCE_DELAY);
 
     useEffect(() => {
         MLAPIClient.fetchKMeans(points, k)
@@ -38,7 +41,7 @@ export default function KMeans() {
         .catch(err => {
             console.log(err);
         });
-    }, [toggle]);
+    }, [debouncedToggle]);
 
     return (
         <div>

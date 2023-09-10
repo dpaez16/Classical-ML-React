@@ -8,6 +8,7 @@ import KMedoidsDropdown from './kmedoidsDropdown/kmedoidsDropdown';
 import MLAPIClient from '../../api/mlApiClient';
 import useArray from '../../hooks/useArray';
 import useToggle from '../../hooks/useToggle';
+import useDebounce from '../../hooks/useDebounce';
 import { Header } from 'semantic-ui-react';
 import './kmedoids.css';
 
@@ -34,6 +35,7 @@ const METRICS = [
 ];
 
 export default function KMedoids() {
+    const DEBOUNCE_DELAY = 250;
     const [points, setPoints, pushPoint, deletePointAtIndex] = useArray(
         [{x: 1.0, y: 2.0, label: 0}, {x: 2.0, y: 1.0, label: 0}, {x: 3.0, y: 4.0, label: 0}, {x: -1.0, y: 2.0, label: 0}]
     );
@@ -41,6 +43,7 @@ export default function KMedoids() {
     const [centroids, setCentroids] = useState([]);
     const [metric, setMetric] = useState(METRICS[1]);
     const [toggle, flipToggle] = useToggle();
+    const debouncedToggle = useDebounce(toggle, DEBOUNCE_DELAY);
 
     useEffect(() => {
         MLAPIClient.fetchKMedoids(points, k, metric)
@@ -51,7 +54,7 @@ export default function KMedoids() {
         .catch(err => {
             console.log(err);
         });
-    }, [toggle]);
+    }, [debouncedToggle]);
 
     return (
         <div>
