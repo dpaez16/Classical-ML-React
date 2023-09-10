@@ -5,18 +5,27 @@ import LinRegressChart from './linRegressChart/linRegressChart';
 import LinRegressStats from './linRegressStats/linRegressStats';
 import LinRegressBackground from './linRegressBackground/linRegressBackground';
 import MLAPIClient from '../../api/mlApiClient';
+import useArray from '../../hooks/useArray';
+import useToggle from '../../hooks/useToggle';
+import useDebounce from '../../hooks/useDebounce';
 import { Header } from 'semantic-ui-react';
 import './linRegress.css';
 
 
 export default function LinRegress() {
-    const [ points, setPoints ] = useState([{x: 1, y: 2}, {x: 2, y: 1}, {x: 3, y: 4}]);
+    const DEBOUNCE_DELAY = 250;
+    const [ points, _, pushPoint, removePointAtIndex ] = useArray(
+        [{x: 1, y: 2}, {x: 2, y: 1}, {x: 3, y: 4}]
+    );
     const [ metadata, setMetadata ] = useState({
         bestFitLine: [],
         m: undefined,
         b: undefined,
         residual: undefined
     });
+
+    const [toggle, flipToggle] = useToggle();
+    const debouncedToggle = useDebounce(toggle, DEBOUNCE_DELAY);
 
     useEffect(() => {
         MLAPIClient.fetchLinearRegression(points)
@@ -29,7 +38,7 @@ export default function LinRegress() {
         .catch(err => {
             console.log(err);
         });
-    }, [points]);
+    }, [debouncedToggle]);
 
     return (
         <div>
@@ -42,14 +51,16 @@ export default function LinRegress() {
                     className='lin-regress__form'
                     points={points}
                     onNewPoint={point => {
-                        setPoints([...points, point]);
+                        pushPoint(point);
+                        flipToggle();
                     }}
                 />
                 <PointsList
                     className='lin-regress__points'
                     points={points}
                     deletePoint={i => {
-                        setPoints(points.filter((_, idx) => i !== idx));
+                        removePointAtIndex(i);
+                        flipToggle();
                     }}
                 />
                 <LinRegressChart
