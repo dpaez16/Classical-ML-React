@@ -1,71 +1,69 @@
-import React, {Component} from 'react';
+import {useState, useEffect} from 'react';
 import Gaussians from './gaussians/gaussians'
 import AddGaussianForm from './addGaussianForm/addGaussianForm';
 import LDAChart from './ldaChart/ldaChart';
 import LDABackground from './ldaBackground/ldaBackground';
+import MLAPIClient from '../../api/mlApiClient';
+import useArray from '../../hooks/useArray';
+import useToggle from '../../hooks/useToggle';
 import { Header } from 'semantic-ui-react';
 import './lda.css';
 
 
-export class LDA extends Component {
-    constructor() {
-        super();
-        this.state = {
-            means: [],
-            covarianceMatrices: [],
-            metadata: {
-                points: [],
-                line: []
-            },
-            toggle: 0
-        };
-    };
+export function LDA() {
+    const [means, _, pushMean, deleteMeanFromIdx] = useArray([]);
+    const [covMatrices, __, pushCovMatrix, deleteCovMatrixFromIdx] = useArray([]);
+    const [metadata, setMetadata] = useState({
+        points: [],
+        line: []
+    });
+    const [toggle, flipToggle] = useToggle();
 
-    render() {
-        return (
-            <div>
-                <Header className='title'
-                        size='huge'
-                >
-                    Linear Discriminant Analysis
-                </Header>
-                <div className="lda">
-                    <AddGaussianForm 
-                        means={this.state.means}
-                        covarianceMatrices={this.state.covarianceMatrices}
-                        onNewInput={
-                            (meanVector, covMat) => this.setState({
-                                means: [...this.state.means, meanVector],
-                                covarianceMatrices: [...this.state.covarianceMatrices, covMat]
-                            })
-                        }
-                        updateMetadata={
-                            newMetadata => this.setState({
-                                metadata: newMetadata,
-                                toggle: (this.state.toggle + 1) % 2
-                            })
-                        }
-                    />
-                    <Gaussians 
-                        means={this.state.means}
-                        covMats={this.state.covarianceMatrices}
-                        toggle={this.state.toggle}
-                        deletePair={
-                            i => this.setState({
-                                    means: this.state.means.filter((_, idx) => i !== idx),
-                                    covarianceMatrices: this.state.covarianceMatrices.filter((_, idx) => i !== idx),
-                                    toggle: (this.state.toggle + 1) % 2
-                                })
-                        }
-                    />
-                    <LDAChart 
-                        points={this.state.metadata.points}
-                        line={this.state.metadata.line}
-                    />
-                </div>
-                <hr></hr>
-                <LDABackground />
+    useEffect(() => {
+        MLAPIClient.fetchLDA(means, covMatrices)
+        .then(newMetadata => {
+            setMetadata({
+                ...metadata,
+                ...newMetadata
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }, [toggle]);
+    
+    return (
+        <div>
+            <Header className='title'
+                    size='huge'
+            >
+                Linear Discriminant Analysis
+            </Header>
+            <div className="lda">
+                <AddGaussianForm 
+                    means={means}
+                    covarianceMatrices={covMatrices}
+                    onNewInput={(meanVector, covMat) => {
+                        pushMean(meanVector);
+                        pushCovMatrix(covMat);
+                        flipToggle();
+                    }}
+                />
+                <Gaussians 
+                    means={means}
+                    covMats={covMatrices}
+                    deletePair={i => {
+                        deleteMeanFromIdx(i);
+                        deleteCovMatrixFromIdx(i);
+                        flipToggle();
+                    }}
+                />
+                <LDAChart   points={metadata.points}
+                            line={metadata.line}
+                />
             </div>
-        );
-    }
+            <hr></hr>
+            <LDABackground />
+        </div>
+    );
 };

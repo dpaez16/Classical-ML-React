@@ -110,4 +110,19 @@ export default class MLAPIClient {
             throw err;
         });
     }
+
+    static fetchLDA(means, covarianceMatrices) {
+        const body = {
+            means: means,
+            covarianceMatrices: covarianceMatrices
+        };
+
+        return this.#createApiRequest(body, 'lda')
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            throw err;
+        });
+    }
 };

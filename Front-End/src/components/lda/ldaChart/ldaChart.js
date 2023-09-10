@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import {useRef} from 'react';
 import * as d3 from 'd3';
+import {properMinScaling, properMaxScaling} from '../../../helpers/dataVisualHelpers';
 
-const colors = [
+const COLORS = [
     'red',
     'green',
     'blue',
@@ -14,86 +15,66 @@ const colors = [
     'turquoise'
 ];
 
-function properMinScaling(n) {
-    if (n >= 0)
-        return n * 0.9;
-    else
-        return n * 1.1;
-}
+export default function LDAChart(props) {
+    const chartArea = useRef(null);
+    const xAxis = useRef(null);
+    const yAxis = useRef(null);
 
-function properMaxScaling(n) {
-    if (n >= 0)
-        return n * 1.1;
-    else
-        return n * 0.9;
-}
-
-export default class LDAChart extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            width: 800,
-            height: 400,
-            radius: 3,
-            margin: {
-                left: 50,
-                right: 10,
-                top: 20,
-                bottom: 50
-            }
-        };
-
-        this.drawWidth = this.state.width - this.state.margin.left - this.state.margin.right;
-        this.drawHeight = this.state.height - this.state.margin.top - this.state.margin.bottom;
+    const CHART_PARAMS = {
+        width: 800,
+        height: 400,
+        radius: 3,
+        margin: {
+            left: 50,
+            right: 10,
+            top: 20,
+            bottom: 50
+        }
     };
 
-    componentDidMount() {
-        this.update();
-    }
+    const drawWidth = CHART_PARAMS.width - CHART_PARAMS.margin.left - CHART_PARAMS.margin.right;
+    const drawHeight = CHART_PARAMS.height - CHART_PARAMS.margin.top - CHART_PARAMS.margin.bottom;
 
-    componentDidUpdate() {
-        this.update();
-    };
-
-    updateScales() {
-        const allPoints = this.props.points
-            .concat(this.props.line);
+    const updateScales = () => {
+        const allPoints = props.points.concat(props.line);
         
-        let xMin = d3.min(allPoints, (d) => properMinScaling(+d.x));
-        let xMax = d3.max(allPoints, (d) => properMaxScaling(+d.x));
-        let yMin = d3.min(allPoints, (d) => properMinScaling(+d.y));
-        let yMax = d3.max(allPoints, (d) => properMaxScaling(+d.y));
+        const xMin = d3.min(allPoints, (d) => properMinScaling(+d.x));
+        const xMax = d3.max(allPoints, (d) => properMaxScaling(+d.x));
+        const yMin = d3.min(allPoints, (d) => properMinScaling(+d.y));
+        const yMax = d3.max(allPoints, (d) => properMaxScaling(+d.y));
 
-        this.xScale = d3.scaleLinear().domain([xMin, xMax]).range([0, this.drawWidth])
-        this.yScale = d3.scaleLinear().domain([yMax, yMin]).range([0, this.drawHeight])
-    }
+        const xScale = d3.scaleLinear().domain([xMin, xMax]).range([0, drawWidth]);
+        const yScale = d3.scaleLinear().domain([yMax, yMin]).range([0, drawHeight]);
+
+        return [xScale, yScale];
+    };
     
-    updatePoints() {
-        let circles = d3.select(this.chartArea).selectAll('circle').data(this.props.points);
+    const updatePoints = (xScale, yScale) => {
+        const circles = d3.select(chartArea.current).selectAll('circle').data(props.points);
 
         circles.enter().append('circle')
             .merge(circles)
-            .attr('r', (d) => this.state.radius)
+            .attr('r', (d) => CHART_PARAMS.radius)
             .attr('fill', (d) => {
-                return colors[d.label % colors.length];
+                return COLORS[d.label % COLORS.length];
             })
             .attr('label', (d) => d.label)
             .transition().duration(500)
-            .attr('cx', (d) => this.xScale(d.x))
-            .attr('cy', (d) => this.yScale(d.y))
+            .attr('cx', (d) => xScale(d.x))
+            .attr('cy', (d) => yScale(d.y))
 
         circles.exit().remove();
-    }
+    };
 
-    updateLines() {
-        const allPoints = [this.props.line];
+    const updateLines = (xScale, yScale) => {
+        const allPoints = [props.line];
 
         const line = d3.line()
-            .x((d) => this.xScale(+d.x))
-            .y((d) => this.yScale(+d.y))
+            .x((d) => xScale(+d.x))
+            .y((d) => yScale(+d.y))
             .curve(d3.curveMonotoneX);
 
-        let ldaLine = d3.select(this.chartArea)
+        const ldaLine = d3.select(chartArea.current)
             .selectAll('path')
             .data(allPoints);
         
@@ -106,46 +87,41 @@ export default class LDAChart extends Component {
             .attr('stroke-width', 3)
             .transition().duration(500)
             .attr('d', (d) => line(d))
-    }
+    };
     
-    updateAxes() {
-        let xAxisFunction = d3.axisBottom()
-            .scale(this.xScale)
+    const updateAxes = (xScale, yScale) => {
+        const xAxisFunction = d3.axisBottom()
+            .scale(xScale)
             .ticks(5, 's');
 
-        let yAxisFunction = d3.axisLeft()
-            .scale(this.yScale)
+        const yAxisFunction = d3.axisLeft()
+            .scale(yScale)
             .ticks(5, 's');
 
-        d3.select(this.xAxis)
+        d3.select(xAxis.current)
             .call(xAxisFunction);
 
-        d3.select(this.yAxis)
+        d3.select(yAxis.current)
             .call(yAxisFunction);
-    }
+    };
     
-    update() {
-        this.updateScales();
-        this.updateAxes();
-        this.updatePoints();
-        this.updateLines();
-    }
+    const [xScale, yScale] = updateScales();
+    updateAxes(xScale, yScale);
+    updatePoints(xScale, yScale);
+    updateLines(xScale, yScale);
 
-    render() {
-        return (
-            <div className="lda__chart">
-                <svg className="chart" width={this.state.width} height={this.state.height}>
-                    <g ref={(node) => { this.chartArea = node; }}
-                        transform={`translate(${this.state.margin.left}, ${this.state.margin.top})`} />
+    return (
+        <div className="lda__chart">
+            <svg className="chart" width={CHART_PARAMS.width} height={CHART_PARAMS.height}>
+                <g ref={chartArea}
+                    transform={`translate(${CHART_PARAMS.margin.left}, ${CHART_PARAMS.margin.top})`} />
 
-                    {/* Axes */}
-                    <g ref={(node) => { this.xAxis = node; }}
-                        transform={`translate(${this.state.margin.left}, ${this.state.height - this.state.margin.bottom})`}></g>
-                    <g ref={(node) => { this.yAxis = node; }}
-                        transform={`translate(${this.state.margin.left}, ${this.state.margin.top})`}></g>
-                </svg>
-            </div>
-
-        )
-    }
+                {/* Axes */}
+                <g ref={xAxis}
+                    transform={`translate(${CHART_PARAMS.margin.left}, ${CHART_PARAMS.height - CHART_PARAMS.margin.bottom})`}></g>
+                <g ref={yAxis}
+                    transform={`translate(${CHART_PARAMS.margin.left}, ${CHART_PARAMS.margin.top})`}></g>
+            </svg>
+        </div>
+    );
 };
