@@ -9,6 +9,12 @@ export default class MLAPIClient {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
+        })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => {
+            throw err;
         });
     }
 
@@ -26,13 +32,7 @@ export default class MLAPIClient {
             y: y
         };
 
-        return this.#createApiRequest(body, "lin_regress")
-        .then(response => {
-            return response.json();
-        })
-        .catch(err => {
-            throw err
-        });
+        return this.#createApiRequest(body, "lin_regress");
     }
 
     static fetchSVM(points, c) {
@@ -53,13 +53,7 @@ export default class MLAPIClient {
             c: c
         };
 
-        return this.#createApiRequest(body, 'svm')
-        .then(response => {
-            return response.json();
-        })
-        .catch(err => {
-            throw err;
-        });
+        return this.#createApiRequest(body, 'svm');
     }
 
     static fetchKMeans(points, k) {
@@ -77,13 +71,7 @@ export default class MLAPIClient {
             k: k
         };
 
-        return this.#createApiRequest(body, 'kmeans')
-        .then(response => {
-            return response.json();
-        })
-        .catch(err => {
-            throw err;
-        });
+        return this.#createApiRequest(body, 'kmeans');
     }
 
     static fetchKMedoids(points, k, metric) {
@@ -102,13 +90,7 @@ export default class MLAPIClient {
             'metric': metric
         };
     
-        return this.#createApiRequest(body, 'kmedoids')
-        .then(response => {
-            return response.json();
-        })
-        .catch(err => {
-            throw err;
-        });
+        return this.#createApiRequest(body, 'kmedoids');
     }
 
     static fetchLDA(means, covarianceMatrices) {
@@ -117,12 +99,6 @@ export default class MLAPIClient {
             covarianceMatrices: covarianceMatrices
         };
 
-        return this.#createApiRequest(body, 'lda')
-        .then(response => {
-            return response.json();
-        })
-        .catch(err => {
-            throw err;
-        });
+        return this.#createApiRequest(body, 'lda');
     }
 };
