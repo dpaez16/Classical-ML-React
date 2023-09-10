@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import PointsList from '../common/pointsList/pointsList';
 import AddPointForm from '../common/addPointForm/addPointForm';
-import KMeansChart from '../kmeans/kmeansChart/kmeansChart'; // TODO: refactor
+import CentroidChart from '../common/centroidChart/centroidChart';
 import KMedoidsBackground from './kmedoidsBackground/kmedoidsBackground';
 import KMedoidsSlider from './kmedoidsSlider/kmedoidsSlider';
 import KMedoidsDropdown from './kmedoidsDropdown/kmedoidsDropdown';
@@ -98,7 +98,8 @@ export default function KMedoids() {
                         flipToggle();
                     }}
                 />
-                <KMeansChart 
+                <CentroidChart
+                    className='kmedoids__chart'
                     points={points}
                     centroids={centroids}
                     colors={COLORS}

@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import PointsList from '../common/pointsList/pointsList';
 import AddPointForm from '../common/addPointForm/addPointForm';
-import KMeansChart from './kmeansChart/kmeansChart';
+import CentroidChart from '../common/centroidChart/centroidChart';
 import KMeansBackground from './kmeansBackground/kmeansBackground';
 import KMeansSlider from './kmeansSlider/kmeansSlider';
 import MLAPIClient from '../../api/mlApiClient';
@@ -72,7 +72,8 @@ export default function KMeans() {
                         flipToggle();
                     }}
                 />
-                <KMeansChart 
+                <CentroidChart
+                    className='kmeans__chart' 
                     points={points}
                     centroids={centroids}
                     colors={KMEANS_COLORS}

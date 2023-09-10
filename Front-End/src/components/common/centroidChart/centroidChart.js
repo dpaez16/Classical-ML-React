@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import {properMinScaling, properMaxScaling} from '../../../helpers/dataVisualHelpers';
 import * as d3 from 'd3';
 
-export default function KMeansChart(props) {
+export default function CentroidChart(props) {
     const chartArea = useRef(null);
     const xAxis = useRef(null);
     const yAxis = useRef(null);
@@ -89,7 +89,7 @@ export default function KMeansChart(props) {
     updatePoints(xScale, yScale);
 
     return (
-        <div className="kmeans__chart">
+        <div className={props.className}>
             <svg className="chart" width={CHART_PARAMS.width} height={CHART_PARAMS.height}>
                 <g ref={chartArea}
                     transform={`translate(${CHART_PARAMS.margin.left}, ${CHART_PARAMS.margin.top})`} />
