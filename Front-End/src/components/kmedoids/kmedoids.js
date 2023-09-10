@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
-import Points from '../lin-regress/points/points'
-import AddPointForm from '../lin-regress/addPointForm/addPointForm'; // TODO: refactor
+import PointsList from '../common/pointsList/pointsList';
+import AddPointForm from '../common/addPointForm/addPointForm';
 import KMeansChart from '../kmeans/kmeansChart/kmeansChart'; // TODO: refactor
 import KMedoidsBackground from './kmedoidsBackground/kmedoidsBackground';
 import KMedoidsSlider from './kmedoidsSlider/kmedoidsSlider';
@@ -61,7 +61,8 @@ export default function KMedoids() {
                 K-Medoids
             </Header>
             <div className="kmedoids">
-                <AddPointForm 
+                <AddPointForm
+                    className='kmedoids__form'
                     points={points}
                     onNewPoint={newPoint => {
                         pushPoint(newPoint);
@@ -89,7 +90,8 @@ export default function KMedoids() {
                     }}
                     maxColors={COLORS.length}
                 />
-                <Points 
+                <PointsList
+                    className='kmedoids__points'
                     points={points}
                     deletePoint={i => {
                         deletePointAtIndex(i);

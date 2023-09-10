@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
-import Points from '../lin-regress/points/points' // TODO: refactor
-import AddPointForm from '../lin-regress/addPointForm/addPointForm'; // TODO: refactor
+import PointsList from '../common/pointsList/pointsList';
+import AddPointForm from '../common/addPointForm/addPointForm';
 import KMeansChart from './kmeansChart/kmeansChart';
 import KMeansBackground from './kmeansBackground/kmeansBackground';
 import KMeansSlider from './kmeansSlider/kmeansSlider';
@@ -48,7 +48,8 @@ export default function KMeans() {
                 K-Means
             </Header>
             <div className="kmeans">
-                <AddPointForm 
+                <AddPointForm
+                    className='kmeans__form' 
                     points={points}
                     onNewPoint={point => {
                         pushPoint(point);
@@ -63,7 +64,8 @@ export default function KMeans() {
                     }}
                     maxColors={KMEANS_COLORS.length}
                 />
-                <Points 
+                <PointsList 
+                    className='kmeans__points'
                     points={points}
                     deletePoint={i => {
                         deletePointAtIndex(i);

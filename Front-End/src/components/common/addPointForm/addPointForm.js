@@ -19,7 +19,7 @@ export default function AddPointForm(props) {
     };
 
     return (
-        <div className='lin-regress__form'>
+        <div className={props.className}>
             <h2><u>Input Point</u>:</h2>
             <Form className='xy-form'>
                 <header className="xy-form__row">

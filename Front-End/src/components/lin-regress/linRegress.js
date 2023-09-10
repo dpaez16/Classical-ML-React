@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Points from './points/points'
-import AddPointForm from './addPointForm/addPointForm';
+import PointsList from '../common/pointsList/pointsList'
+import AddPointForm from '../common/addPointForm/addPointForm';
 import LinRegressChart from './linRegressChart/linRegressChart';
 import LinRegressStats from './linRegressStats/linRegressStats';
 import LinRegressBackground from './linRegressBackground/linRegressBackground';
@@ -38,13 +38,15 @@ export default function LinRegress() {
                 Linear Regression
             </Header>
             <div className="lin-regress">
-                <AddPointForm 
+                <AddPointForm
+                    className='lin-regress__form'
                     points={points}
                     onNewPoint={point => {
                         setPoints([...points, point]);
                     }}
                 />
-                <Points 
+                <PointsList
+                    className='lin-regress__points'
                     points={points}
                     deletePoint={i => {
                         setPoints(points.filter((_, idx) => i !== idx));
